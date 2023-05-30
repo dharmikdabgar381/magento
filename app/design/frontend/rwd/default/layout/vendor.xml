@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">    
+    <admin_vendor_index>
+        <reference name="root">
+                <action method="setTemplate">
+                    <!-- <template>page/column.phtml</template> -->
+                </action>
+        </reference>
+        <reference name="content">
+                <block type="vendor/grid" template="vendor/grid.phtml" name="vendorGrid"></block>
+        </reference>
+    </admin_vendor_index>
+</layout>
+
