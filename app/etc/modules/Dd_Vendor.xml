@@ -1,0 +1,8 @@
+<config>
+<modules>
+    <Dd_Vendor>
+        <active>true</active>
+        <codePool>local</codePool>
+    </Dd_Vendor>
+</modules>
+</config>
