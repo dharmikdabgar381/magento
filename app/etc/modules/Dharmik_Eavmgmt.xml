@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dharmik_Eavmgmt>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Dharmik_Eavmgmt>
+    </modules>
+</config>
