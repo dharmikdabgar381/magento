@@ -1,0 +1,8 @@
+<config>
+<modules>
+    <Dharmik_Idx>
+        <active>true</active>
+        <codePool>local</codePool>
+    </Dharmik_Idx>
+</modules>
+</config>
