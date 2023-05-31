@@ -26,7 +26,6 @@ class Dharmik_Idx_Block_Adminhtml_Idx_Grid extends Mage_Adminhtml_Block_Widget_G
    protected function _prepareCollection()
     {
         $collection = Mage::getModel('idx/idx')->getCollection();
-        // var_dump(Mage::getModel('idx/idx')->getResource());
         $this->setCollection($collection);
 
 
