@@ -209,5 +209,54 @@ class Dharmik_Idx_Adminhtml_IdxController extends Mage_Adminhtml_Controller_Acti
     }
 
 
+    public function productAction()
+    {
+        try {
+            $idxModel = Mage::getModel('idx/idx');
+            $brandResult = $idxModel->checkBrands();
+            $collectionResult = $idxModel->checkCollection();
+
+            if (!$brandResult && !$collectionResult) {
+                Mage::getSingleton('adminhtml/session')->addError('Brand is not fine');
+                Mage::getSingleton('adminhtml/session')->addError('Collection is not fine');
+            } 
+            elseif (!$brandResult) {
+                Mage::getSingleton('adminhtml/session')->addError('Brand is not fine');
+            }
+            elseif (!$collectionResult) {
+                Mage::getSingleton('adminhtml/session')->addError('Collection is not fine');
+            }
+            else {
+            $idx = Mage::getModel('idx/idx');       
+            $idxCollection = $idx->getCollection();
+            $idxCollectionArray = $idx->getCollection()->getData();
+
+            $newProducts = $idx->updateMainProduct($idxCollectionArray);
+
+            $write = Mage::getSingleton('core/resource')->getConnection('core_write');
+            $sourceTable = Mage::getSingleton('core/resource')->getTableName('catalog_product_entity');
+            $destinationTable = Mage::getSingleton('core/resource')->getTableName('import_product_idx');
+
+            $query = "UPDATE {$destinationTable} AS dest
+                      INNER JOIN {$sourceTable} AS src ON dest.sku = src.sku
+                      SET dest.product_id = src.entity_id";
+            $write->query($query);
+            
+            Mage::getSingleton('adminhtml/session')->addSuccess('Products imported successfully');
+            }
+
+            // if (!$collectionResult) {
+            // }
+
+
+
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            Mage::logException($e);
+        }
+        $this->_redirect('*/*/index');
+    }
+
+
 
 }
