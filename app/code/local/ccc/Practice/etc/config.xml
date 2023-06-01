@@ -53,9 +53,9 @@
         <blocks>
             <practice>
                 <class>Ccc_Practice_Block</class>
-                <rewrite>
+                <!-- <rewrite>
                     <adminhtml_practice>Ccc_Practice_Block_Adminhtml_NewPractice</adminhtml_practice>
-                </rewrite>
+                </rewrite> -->
             </practice>
 
         </blocks>
@@ -63,11 +63,11 @@
            <practice>
                   <class>Ccc_Practice_Helper</class>
             </practice>
-            <practice>
+            <!-- <practice>
                   <rewrite>
                       <data>Ccc_Practice_Helper_NewData</data>
                   </rewrite>
-            </practice>
+            </practice> -->
         </helpers>
         <events>
             <cms_page_prepare_save>
@@ -99,13 +99,13 @@
                     <frontName>practice</frontName>
                 </args>
             </practice>
-            <adminhtml>
+            <!-- <adminhtml>
                 <args>
                     <modules>
-                        <ccc_practice before='Mage_Adminhtml_Catalog'>Ccc_Practice_Adminhtml</ccc_practice>
+                        <ccc_practice before='Mage_Adminhtml'>Ccc_Practice_Adminhtml</ccc_practice>
                     </modules>
                 </args>
-            </adminhtml>
+            </adminhtml> -->
         </routers>
          <layout>
             <updates>

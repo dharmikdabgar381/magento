@@ -1,7 +1,7 @@
 <config>
     <modules>
         <Dharmik_Idx>    
-            <version>1.2.3</version>
+            <version>0.2.0</version>
         </Dharmik_Idx>
     </modules>
     <frontend>
@@ -46,9 +46,6 @@
                     <idx>
                         <table>import_product_idx</table>
                     </idx>
-                    <idx_address>
-                        <table>idx_address</table>
-                    </idx_address>
                 </entities>
             </idx_resource>
         </models>
