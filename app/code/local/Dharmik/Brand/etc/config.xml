@@ -1,19 +1,28 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <config>
     <modules>
-        <Dharmik_Brand>    
-            <version>1.1.0</version>
+        <Dharmik_Brand>
+            <version>1.1.1</version>
         </Dharmik_Brand>
-    </modules>
-    <frontend>        
+    </modules> 
+    <frontend>
+        <routers>
+            <brand>
+                <use>standard</use>
+                <args>
+                    <module>Dharmik_Brand</module>
+                    <frontName>brand</frontName>
+                </args>
+            </brand>
+        </routers>
         <layout>
             <updates>
-                <Brand module="Dharmik_Brand">
-                    <file>Dharmik_Brand.xml</file>
-                </Brand>
+                <brand module="Dharmik_Brand">
+                    <file>brand.xml</file>
+                </brand>
             </updates>
         </layout>
-    </frontend>
+    </frontend>   
     <global>
         <resources>
             <brand_setup>
@@ -51,7 +60,6 @@
             </catalog_product>
         </fieldsets>
         <models>
-            
             <brand>
                 <class>Dharmik_Brand_Model</class>
                 <resourceModel>brand_resource</resourceModel>
@@ -63,6 +71,12 @@
                     <brand>
                         <table>brand</table>
                     </brand>
+                    <brand_address>
+                        <table>brand_address</table>
+                    </brand_address>
+                    <brand_price>
+                        <table>brand_price</table>
+                    </brand_price>
                 </entities>
             </brand_resource>
         </models>
@@ -72,36 +86,20 @@
             </brand>
         </blocks>
         <helpers>
-           <brand>
-                  <class>Dharmik_brand_Helper</class>
+            <brand>
+                <class>Dharmik_Brand_Helper</class>
             </brand>
         </helpers>
     </global>
     <admin>
-        <!-- <routers>
-            <adminhtml>
-                <args>
-                    <modules>
-                        <Dharmik_brand>Dharmik_brand_Adminhtml</Dharmik_brand>
-                    </modules>
-                </args>
-            </adminhtml>
-        </routers> -->
         <routers>
-            <Brand>
+            <brand>
                 <use>admin</use>
                 <args>
                     <module>Dharmik_Brand</module>
                     <frontName>brand</frontName>
                 </args>
-            </Brand>
+            </brand>
         </routers>
-         <layout>
-            <updates>
-                <brand>
-                    <file>brand.xml</file>
-                </brand>
-            </updates>
-        </layout>
     </admin>
 </config>
