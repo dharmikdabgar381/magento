@@ -2,20 +2,15 @@
 $installer = new Mage_Eav_Model_Entity_Setup('core_setup');
 $installer->startSetup();
 $installer->addAttribute(4, 'brand', array(
-    'group'                       => 'General',
-    'type'                        => 'int',
-    'input'                       => 'select',
-    'label'                       => 'Brand',
-    'sort_order'                  => '',
-    'source'                      => 'Dharmik_Brand_Model_Source_Model',
-    'required'                    => 0,
-    'visible'                     => 1,
-    'user_defined'                => 1,
-    'searchable'                  => 1,
-    'filterable'                  => 1,
-    'visible_on_front'            => 1,
-    'visible_in_advanced_search'  => 0,
-    'is_html_allowed_on_front'    => 1,
-    'comparable'                  => ''
+    'type'          => 'int',
+    'input'         => 'select',
+    'label'         => 'Brand',
+    'required'      => 0,
+    'group'         => 'General',
+    'source'        => 'saksham_brand_model_source_model',
+    'sort_order'    => '100',
+    'global'        => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
+    'visible'       => true,
+    'user_defined'  => true,
 ));
 $installer->endSetup();
