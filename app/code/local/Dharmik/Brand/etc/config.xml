@@ -4,7 +4,25 @@
         <Dharmik_Brand>
             <version>1.1.1</version>
         </Dharmik_Brand>
-    </modules>    
+    </modules> 
+    <frontend>
+        <routers>
+            <brand>
+                <use>standard</use>
+                <args>
+                    <module>Dharmik_Brand</module>
+                    <frontName>brand</frontName>
+                </args>
+            </brand>
+        </routers>
+        <layout>
+            <updates>
+                <brand module="Dharmik_Brand">
+                    <file>brand.xml</file>
+                </brand>
+            </updates>
+        </layout>
+    </frontend>   
     <global>
         <resources>
             <brand_setup>

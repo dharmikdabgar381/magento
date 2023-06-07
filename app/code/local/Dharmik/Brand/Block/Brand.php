@@ -1,21 +1,13 @@
 <?php
-class Dharmik_Brand_Block_Adminhtml_Brand extends Mage_Adminhtml_Block_Widget_Grid_Container
+class Dharmik_Brand_Block_Brand extends Mage_Core_Block_Template
 {
     public function __construct()
     {
-        $this->_blockGroup = 'brand';
-        $this->_controller = 'adminhtml_brand';
-        $this->_headerText = Mage::helper('brand')->__('Manage Brands');
         parent::__construct();
-        if ($this->_isAllowedAction('save')) {
-            $this->_updateButton('add', 'label', Mage::helper('brand')->__('Add New Brand'));
-        } else {
-            $this->_removeButton('add');
-        }
     }
 
-    protected function _isAllowedAction($action)
+    public function getBrands()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('brand/adminhtml_brand/' . $action);
+        return Mage::getModel('brand/brand')->getCollection()->addOrder('sort_order', 'ASC');
     }
 }

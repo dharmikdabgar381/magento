@@ -7,7 +7,7 @@ $installer->addAttribute(4, 'brand', array(
     'label'         => 'Brand',
     'required'      => 0,
     'group'         => 'General',
-    'source'        => 'saksham_brand_model_source_model',
+    'source'        => 'dharmik_brand_model_source_model',
     'sort_order'    => '100',
     'global'        => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
     'visible'       => true,
