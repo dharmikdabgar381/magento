@@ -11,3 +11,7 @@ class Dharmik_Brand_Block_Brand extends Mage_Core_Block_Template
         return Mage::getModel('brand/brand')->getCollection()->addOrder('sort_order', 'ASC');
     }
 }
+
+
+
+

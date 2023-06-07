@@ -26,3 +26,4 @@ $installer->getConnection()
         'comment'   => 'Sort Order'
         ));
 $installer->endSetup();
+
