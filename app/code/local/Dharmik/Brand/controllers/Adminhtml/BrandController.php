@@ -44,11 +44,17 @@ class Dharmik_Brand_Adminhtml_BrandController extends Mage_Adminhtml_Controller_
         try {
             $brandModel = Mage::getModel('brand/brand');
             $brandData = $this->getRequest()->getPost('brand');
-            $brandModel->setData($brandData)
-                ->setId($this->getRequest()->getParam('brand_id'))
-                ->saveImage('image', Mage::getBaseDir('media') . DS . 'Brand')
-                ->saveImage('banner', Mage::getBaseDir('media') . DS . 'Brand' . DS . 'Banner')
-                ->addData(['url_key' => str_replace(' ', '-', $brandModel->name)]);
+            if ($this->getRequest()->getParam('brand_id')) {
+                $brandModel->setData($brandData)
+                    ->setId($this->getRequest()->getParam('brand_id'));
+            }
+            else
+            {
+                $brandModel->setData($brandData)
+                    ->setId($this->getRequest()->getParam('brand_id'))
+                    ->saveImage('image', Mage::getBaseDir('media') . DS . 'Brand')
+                    ->saveImage('banner', Mage::getBaseDir('media') . DS . 'Brand' . DS . 'Banner');
+            }
 
 
             if ($brandModel->brand_id == NULL) {
@@ -56,7 +62,6 @@ class Dharmik_Brand_Adminhtml_BrandController extends Mage_Adminhtml_Controller_
             } else {
                 $brandModel->updated_at = date("y-m-d H:i:s");
             }
-
             $brandModel->save();
             if ($brandModel->brand_id) {
                 $brandModel->saveRewriteUrlKey();

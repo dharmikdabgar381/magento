@@ -30,7 +30,7 @@ class Dharmik_Brand_Model_Brand extends Mage_Core_Model_Abstract
         if (!$rewrite->getId()) {
             $rewrite->setStoreId(0) 
                 ->setIdPath('brand/' . $brandId)
-                ->setRequestPath($urlKey)
+                ->setRequestPath($rewriteUrl)
                 ->setTargetPath('brand/index/view/id/' . $brandId)
                 ->setIsSystem(0)
                 ->save();
