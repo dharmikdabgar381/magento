@@ -30,7 +30,7 @@ class Ccc_Category_Block_Adminhtml_Catalog_Category_Tree extends Mage_Adminhtml_
 
         $category = Mage::getModel('catalog/category')->load($node->getId());
         $featuredCategory = $category->getFeaturedCategory();
-      if ($featuredCategory == '14') {
+      if ($featuredCategory == '1') {
             $item['cls'] = 'folder featured-yes-category';
         } else {
             $item['cls'] = 'folder';
