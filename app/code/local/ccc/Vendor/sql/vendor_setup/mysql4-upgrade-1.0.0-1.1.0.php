@@ -3,9 +3,9 @@ $installer = $this;
 $installer->startSetup();
 
 $table = $installer->getConnection()
-    ->newTable($installer->getTable('vendor'))
+    ->newTable($installer->getTable('vendor/vendor_address'))
     ->addColumn(
-        'vendor_id',
+        'address_id',
         Varien_Db_Ddl_Table::TYPE_INTEGER,
         null,
         array(
@@ -14,53 +14,62 @@ $table = $installer->getConnection()
             'primary' => true,
             'unsigned' => true,
         ),
-        'Vendor ID'
+        'Address ID'
     )
     ->addColumn(
-        'name',
-        Varien_Db_Ddl_Table::TYPE_TEXT,
-        255,
-        array(
-            'nullable' => false,
-        ),
-        'Name'
-    )
-    ->addColumn(
-        'email',
-        Varien_Db_Ddl_Table::TYPE_TEXT,
-        255,
-        array(
-            'nullable' => false,
-        ),
-        'Email'
-    )
-    ->addColumn(
-        'password',
-        Varien_Db_Ddl_Table::TYPE_TEXT,
-        255,
-        array(
-            'nullable' => false,
-        ),
-        'Password'
-    )
-    ->addColumn(
-        'mobile',
-        Varien_Db_Ddl_Table::TYPE_TEXT,
-        20,
-        array(
-            'nullable' => false,
-        ),
-        'Mobile'
-    )
-    ->addColumn(
-        'status',
-        Varien_Db_Ddl_Table::TYPE_SMALLINT,
+        'vendor_id',
+        Varien_Db_Ddl_Table::TYPE_INTEGER,
         null,
         array(
             'nullable' => false,
-            'default' => 0,
+            'unsigned' => true,
         ),
-        'Status (Active/Not Active)'
+        'Vendor ID'
+    )
+    ->addColumn(
+        'address',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        255,
+        array(
+            'nullable' => false,
+        ),
+        'Address'
+    )
+    ->addColumn(
+        'postal_code',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        10,
+        array(
+            'nullable' => false,
+        ),
+        'Postal Code'
+    )
+    ->addColumn(
+        'city',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        255,
+        array(
+            'nullable' => false,
+        ),
+        'City'
+    )
+    ->addColumn(
+        'state',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        255,
+        array(
+            'nullable' => false,
+        ),
+        'State'
+    )
+    ->addColumn(
+        'country',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        255,
+        array(
+            'nullable' => false,
+        ),
+        'Country'
     )
     ->addColumn(
         'created_at',
@@ -81,9 +90,21 @@ $table = $installer->getConnection()
             'default' => Varien_Db_Ddl_Table::TIMESTAMP_INIT_UPDATE,
         ),
         'Updated At'
+    )
+    ->addForeignKey(
+        $installer->getFkName(
+            'vendor/vendor_address',
+            'vendor_id',
+            'vendor/vendor',
+            'vendor_id'
+        ),
+        'vendor_id',
+        $installer->getTable('vendor/vendor'),
+        'vendor_id',
+        Varien_Db_Ddl_Table::ACTION_CASCADE,
+        Varien_Db_Ddl_Table::ACTION_CASCADE
     );
 
 $installer->getConnection()->createTable($table);
 
 $installer->endSetup();
-?>
