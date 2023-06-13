@@ -41,22 +41,23 @@ class Ccc_Vendor_Block_Adminhtml_Vendor_Grid extends Mage_Adminhtml_Block_Widget
             'index'     => 'vendor_id',
         ));
 
-        $this->addColumn('fname', array(
-            'header'    => Mage::helper('vendor')->__('First Name'),
+        $this->addColumn('name', array(
+            'header'    => Mage::helper('vendor')->__('Name'),
             'align'     => 'left',
-            'index'     => 'fname'
+            'index'     => 'name'
         ));
 
-        $this->addColumn('lname', array(
-            'header'    => Mage::helper('vendor')->__('Last Name'),
-            'align'     => 'left',
-            'index'     => 'lname'
-        ));
 
         $this->addColumn('email', array(
             'header'    => Mage::helper('vendor')->__('Email'),
             'align'     => 'left',
             'index'     => 'email'
+        ));
+
+        $this->addColumn('password', array(
+            'header'    => Mage::helper('vendor')->__('Password'),
+            'align'     => 'left',
+            'index'     => 'password'
         ));
 
         $this->addColumn('mobile', array(
@@ -65,24 +66,11 @@ class Ccc_Vendor_Block_Adminhtml_Vendor_Grid extends Mage_Adminhtml_Block_Widget
             'index'     => 'mobile'
         ));
 
-        $this->addColumn('gender', array(
-            'header'    => Mage::helper('vendor')->__('Gender'),
-            'align'     => 'left',
-            'index'     => 'gender'
-        ));
-
         $this->addColumn('status', array(
             'header'    => Mage::helper('vendor')->__('Status'),
             'align'     => 'left',
             'index'     => 'status'
         ));
-
-        $this->addColumn('company', array(
-            'header'    => Mage::helper('vendor')->__('Company'),
-            'align'     => 'left',
-            'index'     => 'company'
-        ));
-
 
 
         return parent::_prepareColumns();

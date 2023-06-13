@@ -8,3 +8,4 @@ class Ccc_Vendor_Block_Vendor extends Mage_Core_Block_Template
 		
 	}
 }
+?>

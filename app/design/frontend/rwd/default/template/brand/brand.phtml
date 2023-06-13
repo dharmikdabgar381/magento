@@ -1,0 +1,56 @@
+<style>
+    .card {
+/*        border: 1px solid #ccc;*/
+        border-radius: 5px;
+        padding: 20px;
+        margin: 10px;
+        width: 300px;
+/*        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+    }
+
+    .card img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .card h3 {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    .card h3:hover{
+        text-decoration: none;
+    }
+
+    .card p {
+        margin-top: 10px;
+    }
+
+    .heading{
+        font-size: 25px;
+        margin: 10px;
+        text-align: center;
+    }
+    .sub-heading{
+        font-size: 25px;
+        color: blue;
+    }
+    .card:hover img{
+        transform: scale(1.1);
+    }
+</style>
+<div class="heading">
+    Featured
+    <span class="sub-heading">Brands</span>
+</div>
+<div style="display:flex; margin-bottom: 3rem;">
+    <?php foreach ($this->getBrands() as $brand): ?>
+        <div class="homepage-banner card">
+            <p><a href="<?php echo $this->getBaseUrl().'media'.DS.'Brand'.DS.'Banner'.DS.$brand->banner; ?>">
+              <img src="<?php echo Mage::getBaseUrl('media') . DS. 'Brand' . DS . $brand->image; ?>" alt="<?php echo $brand->name; ?>" style="width:100%"/>
+            </a></p>
+            <center><h1><a href="<?php echo Mage::getBaseUrl().'brand'.DS.$brand->url_key;?>"><?php echo $brand->name; ?></h1></a></center>
+        </div>
+    <?php endforeach; ?>
+    </div>
+</div>

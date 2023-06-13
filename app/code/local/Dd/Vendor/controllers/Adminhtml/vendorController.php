@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * 
+ */
 class Dd_Vendor_Adminhtml_VendorController extends Mage_Adminhtml_Controller_Action
 {
 	
@@ -20,6 +24,29 @@ class Dd_Vendor_Adminhtml_VendorController extends Mage_Adminhtml_Controller_Act
         $this->_addContent($this->getLayout()->createBlock(' vendor/adminhtml_vendor_edit'))->_addLeft($this->getLayout()->createBlock('vendor/adminhtml_vendor_edit_tabs'));
         $this->renderLayout();
     }
+
+   public function updateStateOptionsAction()
+    {
+
+        $countryId = $this->getRequest()->getParam('country_id');
+        Mage::log($countryId,null,'country.log');
+        $options = array();
+
+        $states = Mage::getModel('directory/region')->getResourceCollection()
+            ->addCountryFilter($countryId)
+            ->load();
+        foreach ($states as $state) {
+            $options[] = array(
+                'value' => $state->getId(),
+                'label' => $state->getName()
+            );
+        }
+        
+        // Return the options as JSON response
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody(json_encode($options));
+    }
+
 
     public function editAction() 
     {
@@ -57,7 +84,8 @@ class Dd_Vendor_Adminhtml_VendorController extends Mage_Adminhtml_Controller_Act
         try {
             $model = Mage::getModel('vendor/vendor');
             $data = $this->getRequest()->getPost();
-            
+            $data['vendor']['password'] = md5($data['vendor']['password']);
+        
             if (!$vendorId = $this->getRequest()->getParam('vendor_id'))
             {
                 $model->setData($data['vendor'])->setId($this->getRequest()->getParam('vendor_id'));
@@ -146,6 +174,34 @@ class Dd_Vendor_Adminhtml_VendorController extends Mage_Adminhtml_Controller_Act
             }
         }
          
+        $this->_redirect('*/*/index');
+    }
+
+    public function massStatusAction()
+    {
+        $vendorIds = $this->getRequest()->getParam('vendor_id');
+        $status = $this->getRequest()->getParam('status');
+
+        if (!is_array($vendorIds)) {
+            $this->_getSession()->addError($this->__('Please select vendor(s).'));
+        } else {
+            try {
+                $vendorCollection = Mage::getModel('vendor/vendor')->getCollection()
+                    ->addFieldToFilter('vendor_id', array('in' => $vendorIds));
+
+                foreach ($vendorCollection as $vendor) {
+                    $vendor->setStatus($status);
+                    $vendor->save();
+                }
+
+                $this->_getSession()->addSuccess(
+                    $this->__('Total of %d vendor(s) status were successfully updated.', count($vendorIds))
+                );
+            } catch (Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+            }
+        }
+
         $this->_redirect('*/*/index');
     }
 

@@ -11,6 +11,5 @@ class Dharmik_Idx_Block_Adminhtml_Idx_Edit_Tab_Form extends Mage_Adminhtml_Block
             'required' => true,
             'name' => 'import_options',
         ));
-
     }
 }

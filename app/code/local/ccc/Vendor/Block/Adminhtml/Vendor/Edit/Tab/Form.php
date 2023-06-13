@@ -8,16 +8,10 @@ class Ccc_Vendor_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminhtml_Blo
 		$vendorField = $form->addFieldset('vendor_form',array('legend'=>Mage::helper('vendor')->__('Vendor information')));
 
 
-		$vendorField->addField('fname', 'text', array(
-            'label' => Mage::helper('vendor')->__('First Name'),
+		$vendorField->addField('name', 'text', array(
+            'label' => Mage::helper('vendor')->__('Name'),
             'required' => true,
-            'name' => 'vendor[fname]',
-		));
-
-		$vendorField->addField('lname', 'text', array(
-            'label' => Mage::helper('vendor')->__('Last Name'),
-            'required' => true,
-            'name' => 'vendor[lname]',
+            'name' => 'vendor[name]',
 		));
 
 		$vendorField->addField('email', 'text', array(
@@ -26,40 +20,32 @@ class Ccc_Vendor_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminhtml_Blo
             'name' => 'vendor[email]',
 		));
 
+		$vendorField->addField('password', 'text', array(
+            'label' => Mage::helper('vendor')->__('Password'),
+            'required' => true,
+            'name' => 'vendor[password]',
+		));
+
 		$vendorField->addField('mobile', 'text', array(
             'label' => Mage::helper('vendor')->__('Mobile'),
             'required' => true,
             'name' => 'vendor[mobile]',
 		));
 
-		$vendorField->addField('gender', 'select', array(
-            'label' => Mage::helper('vendor')->__('Gender'),
-            'required' => true,
-            'name' => 'vendor[gender]',
-            'type' => 'select',
-            'options' => array(
-            	'1' => Mage::helper('vendor')->__('Male'),
-            	'2' => Mage::helper('vendor')->__('Female'),
-
-            )
-		));
-
 		$vendorField->addField('status', 'select', array(
             'label' => Mage::helper('vendor')->__('Status'),
-            'required' => true,
             'name' => 'vendor[status]',
-            'type' => 'select',
-            'options' => array(
-            	'1' => Mage::helper('vendor')->__('Active'),
-            	'2' => Mage::helper('vendor')->__('Inactive'),
-            )
-		));
-
-		$vendorField->addField('company', 'text', array(
-            'label' => Mage::helper('vendor')->__('Company'),
-            'required' => true,
-            'name' => 'vendor[company]',
-		));
+            'values' => array(
+                array(
+                    'value' => 1,
+                    'label' => Mage::helper('vendor')->__('Active'),
+                ),
+                array(
+                    'value' => 0,
+                    'label' => Mage::helper('vendor')->__('Not Active'),
+                ),
+            ),
+        ));
 
 		if ( Mage::getSingleton('adminhtml/session')->getvendorData() )
 		{

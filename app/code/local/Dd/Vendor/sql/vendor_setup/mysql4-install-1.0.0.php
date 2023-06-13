@@ -1,44 +1,89 @@
 <?php
 $installer = $this;
-
 $installer->startSetup();
 
+$table = $installer->getConnection()
+    ->newTable($installer->getTable('vendor'))
+    ->addColumn(
+        'vendor_id',
+        Varien_Db_Ddl_Table::TYPE_INTEGER,
+        null,
+        array(
+            'identity' => true,
+            'nullable' => false,
+            'primary' => true,
+            'unsigned' => true,
+        ),
+        'Vendor ID'
+    )
+    ->addColumn(
+        'name',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        255,
+        array(
+            'nullable' => false,
+        ),
+        'Name'
+    )
+    ->addColumn(
+        'email',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        255,
+        array(
+            'nullable' => false,
+        ),
+        'Email'
+    )
+    ->addColumn(
+        'password',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        255,
+        array(
+            'nullable' => false,
+        ),
+        'Password'
+    )
+    ->addColumn(
+        'mobile',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        20,
+        array(
+            'nullable' => false,
+        ),
+        'Mobile'
+    )
+    ->addColumn(
+        'status',
+        Varien_Db_Ddl_Table::TYPE_SMALLINT,
+        null,
+        array(
+            'nullable' => false,
+            'default' => 0,
+        ),
+        'Status (Active/Not Active)'
+    )
+    ->addColumn(
+        'created_at',
+        Varien_Db_Ddl_Table::TYPE_TIMESTAMP,
+        null,
+        array(
+            'nullable' => false,
+            'default' => Varien_Db_Ddl_Table::TIMESTAMP_INIT,
+        ),
+        'Created At'
+    )
+    ->addColumn(
+        'updated_at',
+        Varien_Db_Ddl_Table::TYPE_TIMESTAMP,
+        null,
+        array(
+            'nullable' => false,
+            'default' => Varien_Db_Ddl_Table::TIMESTAMP_INIT_UPDATE,
+        ),
+        'Updated At'
+    );
 
-$installer->run("
-DROP TABLE IF EXISTS `vendor`;
-CREATE TABLE `vendor` (
-  `vendor_id` int(11) NOT NULL,
-  `fname` varchar(255) NOT NULL,
-  `lname` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `mobile` bigint(20) DEFAULT NULL,
-  `gender` enum('1','2') DEFAULT NULL,
-  `status` enum('1','2') DEFAULT NULL,
-  `company` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `vendor`
---
-ALTER TABLE `vendor`
-  ADD PRIMARY KEY (`vendor_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `vendor`
---
-ALTER TABLE `vendor`
-  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT;
-  ");
+$installer->getConnection()->createTable($table);
 
 $installer->endSetup();
 ?>

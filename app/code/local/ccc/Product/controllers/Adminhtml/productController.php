@@ -31,7 +31,7 @@ class Ccc_Product_Adminhtml_ProductController extends Mage_Adminhtml_Controller_
         $this->_setActiveMenu('Product/items');
         $this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
         $this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
-        $this->_addContent($this->getLayout()->createBlock(' product/adminhtml_product_edit'))->_addLeft($this->getLayout()->createBlock('product/adminhtml_product_edit_tabs'));
+        $this->_addContent($this->getLayout()->createBlock('product/adminhtml_product_edit'))->_addLeft($this->getLayout()->createBlock('product/adminhtml_product_edit_tabs'));
         $this->renderLayout();
     }
 

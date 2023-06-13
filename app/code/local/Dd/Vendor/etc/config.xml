@@ -1,7 +1,7 @@
 <config>
     <modules>
         <Dd_Vendor>    
-            <version>1.2.3</version>
+            <version>1.1.0</version>
         </Dd_Vendor>
     </modules>
     <frontend>
@@ -36,11 +36,11 @@
         </resources>        
         <models>
             <vendor>
-                <class>Ccc_Vendor_Model</class>
+                <class>Dd_Vendor_Model</class>
                 <resourceModel>vendor_resource</resourceModel>
             </vendor>
             <vendor_resource>
-                <class>Ccc_Vendor_Model_Resource</class>
+                <class>Dd_Vendor_Model_Resource</class>
                 <deprecatedNode>vendor_mysql4</deprecatedNode>
                 <entities>
                     <vendor>
@@ -54,16 +54,25 @@
         </models>
         <blocks>
             <vendor>
-                <class>Ccc_Vendor_Block</class>
+                <class>Dd_Vendor_Block</class>
             </vendor>
         </blocks>
         <helpers>
            <vendor>
-                  <class>Ccc_Vendor_Helper</class>
+                  <class>Dd_vendor_Helper</class>
             </vendor>
         </helpers>
     </global>
     <admin>
+        <!-- <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Dd_Vendor>Dd_Vendor_Adminhtml</Dd_Vendor>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers> -->
         <routers>
             <Vendor>
                 <use>admin</use>
