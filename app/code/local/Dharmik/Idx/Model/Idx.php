@@ -161,6 +161,5 @@ class Dharmik_idx_Model_idx extends Mage_Core_Model_Abstract
         return true;   
     }
     
-
     
 }

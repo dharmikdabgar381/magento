@@ -25,8 +25,6 @@ class Dharmik_Brand_Block_Adminhtml_Brand_Grid extends Mage_Adminhtml_Block_Widg
 
    protected function _prepareCollection()
     {
-        // echo "<pre>";
-        // print_r(Mage::getModel('brand/brand')->getCollection());die;
         $collection = Mage::getModel('brand/brand')->getCollection();
         $this->setCollection($collection);
 
