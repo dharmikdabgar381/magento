@@ -7,6 +7,7 @@ class Dd_Vendor_Block_Adminhtml_Vendor_Grid extends Mage_Adminhtml_Block_Widget_
         $this->setId('vendorAdminhtmlVendorGrid');
         $this->setDefaultSort('vendor_id');
         $this->setDefaultDir('ASC');
+        $this->setSaveParametersInSession(true);
     }
 
     protected function _prepareMassaction()
@@ -19,6 +20,30 @@ class Dd_Vendor_Block_Adminhtml_Vendor_Grid extends Mage_Adminhtml_Block_Widget_
         'url'  => $this->getUrl('*/*/massDelete', array('' => '')),
         'confirm' => Mage::helper('vendor')->__('Are you sure?')
         ));
+
+
+    $this->getMassactionBlock()->addItem('status', array(
+        'label' => Mage::helper('vendor')->__('Change Status'),
+        'url' => $this->getUrl('*/*/massStatus'),
+        'additional' => array(
+            'status' => array(
+                'name' => 'status',
+                'type' => 'select',
+                'class' => 'required-entry',
+                'label' => Mage::helper('vendor')->__('Status'),
+                'values' => array(
+                    array(
+                        'value' => 1,
+                        'label' => Mage::helper('vendor')->__('Active'),
+                    ),
+                    array(
+                        'value' => 0,
+                        'label' => Mage::helper('vendor')->__('Not Active'),
+                    ),
+                ),
+            ),
+        ),
+    ));
          
         return $this;
     }
@@ -26,6 +51,11 @@ class Dd_Vendor_Block_Adminhtml_Vendor_Grid extends Mage_Adminhtml_Block_Widget_
    protected function _prepareCollection()
     {
         $collection = Mage::getModel('vendor/vendor')->getCollection();
+        $collection->getSelect()->joinLeft(
+        array('address' => $collection->getTable('vendor/vendor_address')),
+        'main_table.vendor_id = address.vendor_id',
+        array('address', 'postal_code', 'city', 'state', 'country')
+    );
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -33,54 +63,77 @@ class Dd_Vendor_Block_Adminhtml_Vendor_Grid extends Mage_Adminhtml_Block_Widget_
 
     protected function _prepareColumns()
     {
-        $baseUrl = $this->getUrl();
-
         $this->addColumn('vendor_id', array(
-            'header'    => Mage::helper('vendor')->__('Vendor Id'),
-            'align'     => 'left',
-            'index'     => 'vendor_id',
+            'header' => Mage::helper('vendor')->__('Vendor ID'),
+            'align' => 'right',
+            'width' => '50px',
+            'index' => 'vendor_id',
         ));
 
-        $this->addColumn('fname', array(
-            'header'    => Mage::helper('vendor')->__('First Name'),
-            'align'     => 'left',
-            'index'     => 'fname'
-        ));
-
-        $this->addColumn('lname', array(
-            'header'    => Mage::helper('vendor')->__('Last Name'),
-            'align'     => 'left',
-            'index'     => 'lname'
+        $this->addColumn('name', array(
+            'header' => Mage::helper('vendor')->__('Name'),
+            'index' => 'name',
         ));
 
         $this->addColumn('email', array(
-            'header'    => Mage::helper('vendor')->__('Email'),
-            'align'     => 'left',
-            'index'     => 'email'
+            'header' => Mage::helper('vendor')->__('Email'),
+            'index' => 'email',
         ));
 
         $this->addColumn('mobile', array(
-            'header'    => Mage::helper('vendor')->__('Mobile'),
-            'align'     => 'left',
-            'index'     => 'mobile'
-        ));
-
-        $this->addColumn('gender', array(
-            'header'    => Mage::helper('vendor')->__('Gender'),
-            'align'     => 'left',
-            'index'     => 'gender'
+            'header' => Mage::helper('vendor')->__('Mobile'),
+            'index' => 'mobile',
         ));
 
         $this->addColumn('status', array(
-            'header'    => Mage::helper('vendor')->__('Status'),
-            'align'     => 'left',
-            'index'     => 'status'
+            'header' => Mage::helper('vendor')->__('Status'),
+            'index' => 'status',
+            'type' => 'options',
+            'options' => array(
+                1 => Mage::helper('vendor')->__('Active'),
+                0 => Mage::helper('vendor')->__('Not Active'),
+            ),
         ));
 
-        $this->addColumn('company', array(
-            'header'    => Mage::helper('vendor')->__('Company'),
-            'align'     => 'left',
-            'index'     => 'company'
+       
+        $this->addColumn('address', array(
+            'header' => Mage::helper('vendor')->__('Address'),
+            'index' => 'address',
+            // 'renderer' => 'Dd_Vendor_Block_Adminhtml_Vendor_Grid_Renderer_Address',
+        ));
+
+        $this->addColumn('postal_code', array(
+            'header' => Mage::helper('vendor')->__('Postal Code'),
+            'index' => 'postal_code',
+        ));
+
+        $this->addColumn('city', array(
+            'header' => Mage::helper('vendor')->__('City'),
+            'index' => 'city',
+        ));
+
+        $this->addColumn('state', array(
+            'header' => Mage::helper('vendor')->__('State'),
+            'index' => 'state',
+            'renderer' => 'Dd_Vendor_Block_Adminhtml_Vendor_Grid_Renderer_State',
+        ));
+
+        $this->addColumn('country', array(
+            'header' => Mage::helper('vendor')->__('Country'),
+            'index' => 'country',
+            'renderer' => 'Dd_Vendor_Block_Adminhtml_Vendor_Grid_Renderer_Country',
+        ));
+
+         $this->addColumn('created_at', array(
+            'header' => Mage::helper('vendor')->__('Created At'),
+            'index' => 'created_at',
+            'type' => 'datetime',
+        ));
+
+        $this->addColumn('updated_at', array(
+            'header' => Mage::helper('vendor')->__('Updated At'),
+            'index' => 'updated_at',
+            'type' => 'datetime',
         ));
 
 
