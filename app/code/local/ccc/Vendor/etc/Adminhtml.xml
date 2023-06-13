@@ -1,7 +1,7 @@
 <config>
     <menu>
         <vendor translate="title" module="vendor">
-            <title>Vendor</title>
+            <title>vendor</title>
             <sort_order>10</sort_order>
             <children>
                 <managevendor translate="title" module="vendor">

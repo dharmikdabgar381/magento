@@ -5,28 +5,34 @@ class Ccc_Vendor_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminhtml_Blo
 	{
 		$form = new Varien_Data_Form();
 		$this->setForm($form);
-		$fieldset = $form->addFieldset('vendor_form',array('legend'=>Mage::helper('vendor')->__('Vendor information')));
+		$vendorField = $form->addFieldset('vendor_form',array('legend'=>Mage::helper('vendor')->__('Vendor information')));
 
 
-		$fieldset->addField('name', 'text', array(
+		$vendorField->addField('name', 'text', array(
             'label' => Mage::helper('vendor')->__('Name'),
+            'required' => true,
             'name' => 'vendor[name]',
-            'required' => true,
-        ));
+		));
 
-        $fieldset->addField('email', 'text', array(
+		$vendorField->addField('email', 'text', array(
             'label' => Mage::helper('vendor')->__('Email'),
+            'required' => true,
             'name' => 'vendor[email]',
-            'required' => true,
-        ));
+		));
 
-        $fieldset->addField('mobile', 'text', array(
+		$vendorField->addField('password', 'text', array(
+            'label' => Mage::helper('vendor')->__('Password'),
+            'required' => true,
+            'name' => 'vendor[password]',
+		));
+
+		$vendorField->addField('mobile', 'text', array(
             'label' => Mage::helper('vendor')->__('Mobile'),
-            'name' => 'vendor[mobile]',
             'required' => true,
-        ));
+            'name' => 'vendor[mobile]',
+		));
 
-        $fieldset->addField('status', 'select', array(
+		$vendorField->addField('status', 'select', array(
             'label' => Mage::helper('vendor')->__('Status'),
             'name' => 'vendor[status]',
             'values' => array(
@@ -40,25 +46,6 @@ class Ccc_Vendor_Block_Adminhtml_Vendor_Edit_Tab_Form extends Mage_Adminhtml_Blo
                 ),
             ),
         ));
-
-
-
-        $newFieldset = $form->addFieldset(
-            'password_fieldset',
-            array('legend'=>Mage::helper('customer')->__('Password Management'))
-        );
-        $field = $newFieldset->addField('password', 'text',
-            array(
-                'label' => Mage::helper('customer')->__('Password'),
-                'class' => 'input-text required-entry validate-password min-pass-length-' . 6,
-                'name'  => 'vendor[password]',
-                'required' => true,
-                'note' => Mage::helper('adminhtml')
-                    ->__('Password must be at least of %d characters.', 6),
-            )
-        );
-        $field->setRenderer($this->getLayout()->createBlock('adminhtml/customer_edit_renderer_newpass'));
-
 
 		if ( Mage::getSingleton('adminhtml/session')->getvendorData() )
 		{

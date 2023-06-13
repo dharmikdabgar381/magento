@@ -1,7 +1,7 @@
 <config>
     <modules>
         <Ccc_Vendor>    
-            <version>1.1.0</version>
+            <version>1.2.3</version>
         </Ccc_Vendor>
     </modules>
     <frontend>
@@ -59,20 +59,11 @@
         </blocks>
         <helpers>
            <vendor>
-                  <class>Ccc_vendor_Helper</class>
+                  <class>Ccc_Vendor_Helper</class>
             </vendor>
         </helpers>
     </global>
     <admin>
-        <!-- <routers>
-            <adminhtml>
-                <args>
-                    <modules>
-                        <Ccc_Vendor>Ccc_Vendor_Adminhtml</Ccc_Vendor>
-                    </modules>
-                </args>
-            </adminhtml>
-        </routers> -->
         <routers>
             <Vendor>
                 <use>admin</use>
