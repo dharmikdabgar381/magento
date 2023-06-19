@@ -1,0 +1,114 @@
+2023-06-15T12:23:21+00:00 DEBUG (7): Array
+(
+    [text] => Shoes (6)
+    [id] => 3
+    [store] => 0
+    [path] => 1/2/3
+    [cls] => folder featured-yes-category
+    [allowDrop] => 1
+    [allowDrag] => 1
+)
+
+2023-06-15T12:23:21+00:00 DEBUG (7): Array
+(
+    [text] => Bedroom (1)
+    [id] => 4
+    [store] => 0
+    [path] => 1/2/4
+    [cls] => folder featured-yes-category
+    [allowDrop] => 1
+    [allowDrag] => 1
+)
+
+2023-06-15T12:23:21+00:00 DEBUG (7): Array
+(
+    [text] => Default Category (0)
+    [id] => 2
+    [store] => 0
+    [path] => 1/2
+    [cls] => folder
+    [allowDrop] => 1
+    [allowDrag] => 
+    [children] => Array
+        (
+            [0] => Array
+                (
+                    [text] => Shoes (6)
+                    [id] => 3
+                    [store] => 0
+                    [path] => 1/2/3
+                    [cls] => folder featured-yes-category
+                    [allowDrop] => 1
+                    [allowDrag] => 1
+                )
+
+            [1] => Array
+                (
+                    [text] => Bedroom (1)
+                    [id] => 4
+                    [store] => 0
+                    [path] => 1/2/4
+                    [cls] => folder featured-yes-category
+                    [allowDrop] => 1
+                    [allowDrag] => 1
+                )
+
+        )
+
+    [expanded] => 1
+)
+
+2023-06-15T12:23:21+00:00 DEBUG (7): Array
+(
+    [text] => Root (0)
+    [id] => 1
+    [store] => 0
+    [path] => 1
+    [cls] => folder
+    [allowDrop] => 1
+    [allowDrag] => 1
+    [children] => Array
+        (
+            [0] => Array
+                (
+                    [text] => Default Category (0)
+                    [id] => 2
+                    [store] => 0
+                    [path] => 1/2
+                    [cls] => folder
+                    [allowDrop] => 1
+                    [allowDrag] => 
+                    [children] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [text] => Shoes (6)
+                                    [id] => 3
+                                    [store] => 0
+                                    [path] => 1/2/3
+                                    [cls] => folder featured-yes-category
+                                    [allowDrop] => 1
+                                    [allowDrag] => 1
+                                )
+
+                            [1] => Array
+                                (
+                                    [text] => Bedroom (1)
+                                    [id] => 4
+                                    [store] => 0
+                                    [path] => 1/2/4
+                                    [cls] => folder featured-yes-category
+                                    [allowDrop] => 1
+                                    [allowDrag] => 1
+                                )
+
+                        )
+
+                    [expanded] => 1
+                )
+
+        )
+
+    [expanded] => 1
+)
+
