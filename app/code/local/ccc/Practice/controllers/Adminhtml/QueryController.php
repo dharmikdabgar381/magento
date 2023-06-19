@@ -1,66 +1,249 @@
 <?php
 
-class Ccc_Practice_Adminhtml_QueryController extends Mage_Core_Controller_Front_Action
+class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_Action
 {
-	
-	public function indexAction()
-	{
-		echo "<pre>";
-		$resource = Mage::getSingleton('core/resource');
-        $write = $resource->getConnection('core_write');
-        $product = $resource->getTableName('product/product');
-        $idx = $resource->getTableName('idx/idx');
+    public function firstAction()
+    {
+        // Need a list of product with these columns product name, sku, cost, price, color.
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_First');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function firstQueryAction()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
 
-        //Insert Record 
-        $write->insert($product,array('name' => 'Cello FlipStyle', 'sku' => 'CFS221W', 'cost' => 500,'price' => 800, 'quantity' => 100, 'status' => 1, 'description' => 'Vacu Steel Bottle'));
+        $tableName = $resource->getTableName('catalog/product');
+        $select = $readConnection->select()
+            ->from(array('p' => $tableName), array(
+                'sku' => 'p.sku',
+                'name' => 'pv.value',
+                'cost' => 'pdc.value',
+                'price' => 'pdp.value',
+                'color' => 'pi.value',
+            ))
+            ->joinLeft(
+                array('pv' => $resource->getTableName('catalog_product_entity_varchar')),
+                'pv.entity_id = p.entity_id AND pv.attribute_id = 73',
+                array()
+            )
+            ->joinLeft(
+                array('pdc' => $resource->getTableName('catalog_product_entity_decimal')),
+                'pdc.entity_id = p.entity_id AND pdc.attribute_id = 81',
+                array()
+            )
+            ->joinLeft(
+                array('pdp' => $resource->getTableName('catalog_product_entity_decimal')),
+                'pdp.entity_id = p.entity_id AND pdp.attribute_id = 77',
+                array()
+            )
+            ->joinLeft(
+                array('pi' => $resource->getTableName('catalog_product_entity_int')),
+                'pi.entity_id = p.entity_id AND pi.attribute_id = 94',
+                array()
+            );
 
-        // left join
-        $leftJoin = $write->select()
-            ->from(['t' => $product], ['product_id', 'status'])
-            ->joinLeft(['t2' => $idx], 't.product_id = t2.product_id', ['brand_id','collection_id'])   
-            ->group('t2.cost')
-            ->where('t.price LIKE ?', "%500%");
+        echo $select;
+    }
+    public function secondAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Second');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
 
-        echo "<br>";
+    public function secondQueryAction()
+    {
+    	$attributeOptions = [];
 
-        $result = $write->fetchAll($leftJoin);
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
 
-        //Update Query
-        echo 'Update Value :-'.$write->update(
-            $product,
-            ['sku' => 'CFS22W', 'cost' => 6000],
-            ['product_id = ?' => 26]
-        );
-        echo "<br>";
+        $attributeOptionTable = $resource->getTableName('eav_attribute_option');
+        $attributeTable = $resource->getTableName('eav_attribute');
 
-        //Delete Query
+        $select = $readConnection->select()
+            ->from(
+                array('ao' => $attributeOptionTable),
+                array(
+                    'attribute_id' => 'ao.attribute_id',
+                    'option_id' => 'ao.option_id',
+                    'option_name' => 'ov.value',
+                )
+            )
+            ->joinLeft(
+                array('ov' => $resource->getTableName('eav_attribute_option_value')),
+                'ov.option_id = ao.option_id',
+                array()
+            )
+            ->join(
+                array('a' => $attributeTable),
+                'a.attribute_id = ao.attribute_id',
+                array('attribute_code' => 'a.attribute_code')
+            );
 
-        echo 'Delete Value :-'.$write->delete(
-            $product,
-            ['product_id IN (?)' => [27]]
-        );
-
-        // Insert Multiple:
-
-        $data = [
-            ['name' => 'Cello FlipStyle1', 'sku' => 'CFS12W', 'cost' => 600,'price' => 900, 'quantity' => 500, 'status' => 1, 'description' => 'Vacu Steel Bottle'],
-            ['name' => 'Cello FlipStyle2', 'sku' => 'CFS21W', 'cost' => 800,'price' => 1000, 'quantity' => 100, 'status' => 2, 'description' => 'Vacu Steel Bottle'],
-        ];
-        $write->insertMultiple($product, $data);
-        
-        // Insert Update On Duplicate:
-
-        $data = [];
-        $data[] = [
-            'sku' => 'CFS21W',
-            'cost' => 1500
-        ];
-
-        $write->insertOnDuplicate(
-            $product,
-            $data, 
-            ['cost'] 
-        );
-        
+        echo $select;
 	}
+	public function thirdAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Third');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function thirdQueryAction()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+
+        $attributeOptionTable = $resource->getTableName('eav_attribute_option');
+        $attributeTable = $resource->getTableName('eav_attribute');
+
+        $select = $readConnection->select()
+            ->from(
+                array('DD' => $attributeTable),
+                array(
+                    'attribute_id' => 'DD.attribute_id',
+                    'attribute_code' => 'DD.attribute_code',
+                )
+            )
+            ->joinLeft(
+                array('option_count_table' => $attributeOptionTable),
+                'option_count_table.attribute_id = DD.attribute_id',
+                array(
+                    'option_count' => 'COUNT(option_count_table.option_id)',
+                )
+            )
+            ->group('DD.attribute_id')
+            ->having('COUNT(option_count_table.option_id) > 10', 1);
+
+        echo $select;
+    }
+
+    public function fourthAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Fourth');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function fourthQueryAction()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+
+        echo $select = $readConnection->select()
+            ->from(
+                array('DD'=> $resource->getTableName('catalog_product_entity')),
+                array('entity_id','sku')
+            )
+            ->joinLeft(
+                array('DJ'=>$resource->getTableName('catalog_product_entity_varchar')),
+                'DJ.entity_id = DD.entity_id AND DJ.attribute_id = 87',
+                array('image' => 'DJ.value')
+            )
+            ->joinLeft(
+                array('thumb'=>$resource->getTableName('catalog_product_entity_varchar')),
+                'thumb.entity_id = DD.entity_id AND thumb.attribute_id = 89',
+                array('thumbnail' => 'thumb.value')
+            )
+            ->joinLeft(
+                array('small'=>$resource->getTableName('catalog_product_entity_varchar')),
+                'small.entity_id = DD.entity_id AND small.attribute_id = 88',
+                array('small' => 'small.value')
+            );
+    }
+
+    public function fifthAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Fifth');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+
+    public function fifthQueryAction()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        echo $select = $readConnection->select()
+            ->from(
+                array('DD'=> $resource->getTableName('catalog_product_entity')),
+                array('entity_id','sku')
+            )
+            ->joinLeft(
+                array('m'=>$resource->getTableName('catalog/product_attribute_media_gallery')),
+                'm.entity_id = DD.entity_id',
+                array('image' => 'COUNT(m.value)')
+            )
+            ->group('DD.entity_id');
+    }
+    public function sixthAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Sixth');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function sixthQueryAction()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        echo $select = $readConnection->select()
+            ->from(
+                array('DD'=> $resource->getTableName('customer_entity')),
+                array('entity_id','email')
+            )
+            ->joinLeft(
+                array('e'=>$resource->getTableName('customer_entity_varchar')),
+                'e.entity_id = DD.entity_id AND e.attribute_id = 5',
+                array('firstname' => 'e.value')
+            )
+            ->joinLeft(
+                array('o' => $resource->getTableName('sales/order')),
+                'o.customer_id = e.entity_id',
+                array('order_count' => 'COUNT(o.entity_id)')
+            )
+            ->group('DD.entity_id');
+    }
+    public function sevenAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Seven');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function sevenQueryAction()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        echo $select = $readConnection->select()
+            ->from(
+                array('DD'=> $resource->getTableName('customer_entity')),
+                array('entity_id','email')
+            )
+            ->joinLeft(
+                array('e'=>$resource->getTableName('customer_entity_varchar')),
+                'e.entity_id = DD.entity_id AND e.attribute_id = 5',
+                array('firstname' => 'e.value')
+            )
+            ->joinLeft(
+                array('o' => $resource->getTableName('sales/order')),
+                'o.customer_id = e.entity_id',
+                array('order_count' => 'COUNT(o.entity_id)')
+            )
+            ->joinLeft(
+                array('s' => Mage::getSingleton('core/resource')->getTableName('sales_order_status')),
+                'o.status = s.status',
+                array('order_status' => 's.label')
+            )
+            ->group('DD.entity_id');
+    }
+
+
 }
+
+?>

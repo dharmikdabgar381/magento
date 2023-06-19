@@ -67,7 +67,7 @@ class Ccc_Category_Adminhtml_CategoryController extends Mage_Adminhtml_Controlle
     public function saveAction()
     {
         try {
-            $model = Mage::getModel('category/category');
+            $model = Mage::getModel('catewgory/category');
             $data = $this->getRequest()->getPost();
             
             if (!$this->getRequest()->getParam('category_id'))

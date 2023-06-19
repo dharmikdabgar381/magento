@@ -1,46 +1,76 @@
+<?xml version="1.0"?>
 <config>
-    <menu>
+   <menu>
         <practice translate="title" module="practice">
-            <title>Practice</title>
+            <title>Practices</title>
             <sort_order>10</sort_order>
             <children>
-                <managepractice translate="title" module="practice">
-                    <title>Manage practice</title>
-                    <action>practice/adminhtml_first/index</action>
-                    <sort_order>10</sort_order>
-                </managepractice>
-                </children>
-        </practice>
-       </menu>
-       <acl>
-        <resources>
-            <admin>
+                <manage translate="title" module="practice">
+                    <title>Manage Practices</title>
+                    <action>practice/Adminhtml_First/index</action>
+                    <sort_order>0</sort_order>
+                </manage>
+                <first translate="title" module="practice">
+                    <title>Task 1</title>
+                    <action>practice/Adminhtml_Query/first</action>
+                    <sort_order>0</sort_order>
+                </first>
+                 <second translate="title" module="practice">
+                    <title>Task 2</title>
+                    <action>practice/Adminhtml_Query/second</action>
+                    <sort_order>0</sort_order>
+                </second>
+                 <third translate="title" module="practice">
+                    <title>Task 3</title>
+                    <action>practice/Adminhtml_Query/third</action>
+                    <sort_order>0</sort_order>
+                </third>
+                 <fourth translate="title" module="practice">
+                    <title>Task 4</title>
+                    <action>practice/Adminhtml_Query/fourth</action>
+                    <sort_order>0</sort_order>
+                </fourth>
+                 <fifth translate="title" module="practice">
+                    <title>Task 5</title>
+                    <action>practice/Adminhtml_Query/fifth</action>
+                    <sort_order>0</sort_order>
+                </fifth>
+                 <six translate="title" module="practice">
+                    <title>Task 6</title>
+                    <action>practice/Adminhtml_Query/sixth</action>
+                    <sort_order>0</sort_order>
+                </six>
+                 <seven translate="title" module="practice">
+                    <title>Task 7</title>
+                    <action>practice/Adminhtml_Query/seven</action>
+                    <sort_order>0</sort_order>
+                </seven>
+                 <eight translate="title" module="practice">
+                    <title>Task 8</title>
+                    <action>practice/Adminhtml_Query/eighth</action>
+                    <sort_order>0</sort_order>
+                </eight>
+            </children>
+         </practice>
+    </menu>
+    <acl>
+      <resources>
+        <all>
+          <title>Allow Everything</title>
+        </all>
+        <admin>
+            <children>
+                <practice translate="title" module="practice">
+                <title>practice</title>
+                <sort_order>1000</sort_order>
                 <children>
-                    <practice translate="title" module="practice">
-                        <title>practicies</title>
-                        <sort_order>40</sort_order>
-                        <children>
-                             <managepractice translate="title" module="practice">
-                                <title>Manage practice</title>
-                                <action>practice/adminhtml_practice/index</action>
-                                <sort_order>10</sort_order>
-                            </managepractice>
-                        </children>
-                    </practice>
-                    <system>
-                        <children>
-                            <config>
-                                <children>
-                                    <practice translate="title" module="practice">
-                                        <title>practices Section</title>
-                                        <sort_order>50</sort_order>
-                                    </practice>
-                                </children>
-                            </config>
-                        </children>
-                    </system>
+                <practicebackend translate="title">
+                    <title>Manage Practices</title>
+                </practicebackend>
                 </children>
-            </admin>
-        </resources>
+            </practice>
+          </children>
+        </admin>
+      </resources>
     </acl>
 </config>
