@@ -5,10 +5,19 @@
         </Dd_Vendor>
     </modules>
     <frontend>
+        <routers>
+            <vendor>
+                <use>standard</use>
+                <args>
+                    <module>Dd_Vendor</module>
+                    <frontName>vendor</frontName>
+                </args>
+            </vendor>
+        </routers>
         <layout>
             <updates>
                 <Vendor module="Dd_Vendor">
-                    <file>Dd_Vendor.xml</file>
+                    <file>Vendor.xml</file>
                 </Vendor>
             </updates>
         </layout>
@@ -64,15 +73,6 @@
         </helpers>
     </global>
     <admin>
-        <!-- <routers>
-            <adminhtml>
-                <args>
-                    <modules>
-                        <Dd_Vendor>Dd_Vendor_Adminhtml</Dd_Vendor>
-                    </modules>
-                </args>
-            </adminhtml>
-        </routers> -->
         <routers>
             <Vendor>
                 <use>admin</use>
