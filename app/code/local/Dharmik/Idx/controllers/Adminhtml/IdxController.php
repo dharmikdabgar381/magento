@@ -102,50 +102,50 @@ class Dharmik_Idx_Adminhtml_IdxController extends Mage_Adminhtml_Controller_Acti
     }
 
 
-    public function brandAction()
-    {
-        try {
-            $idx = Mage::getModel('idx/idx');       
-            $idxCollection = $idx->getCollection();
-            $idxCollectionArray = $idx->getCollection()->getData();
+    // public function brandAction()
+    // {
+    //     try {
+    //         $idx = Mage::getModel('idx/idx');       
+    //         $idxCollection = $idx->getCollection();
+    //         $idxCollectionArray = $idx->getCollection()->getData();
 
-            $idxBrandId = array_column($idxCollectionArray,'index');
-            $idxBrandNames = array_column($idxCollectionArray,'brand');
-            $idxBrandNames = array_combine($idxBrandId,$idxBrandNames);
+    //         $idxBrandId = array_column($idxCollectionArray,'index');
+    //         $idxBrandNames = array_column($idxCollectionArray,'brand');
+    //         $idxBrandNames = array_combine($idxBrandId,$idxBrandNames);
             
-            $newBrands = $idx->updateBrandTable(array_unique($idxBrandNames));
-            $idxCollection = $idx->getCollection();
-            foreach ($idxCollection as $idx) {
-                if(!$idx->brand_id)
-                {
-                    $brand = Mage::getModel('brand/brand');
-                    $brandCollection = Mage::getModel('brand/brand')->getCollection();
-                    $brandCollection->getSelect()->where('main_table.name=?',$idx->brand);
-                    $brandData = $brandCollection->getData();
-                    $resource = Mage::getSingleton('core/resource');
-                    $connection = $resource->getConnection('core_write');
-                    $tableName = $resource->getTableName('import_product_idx');
-                    $condition = '`index` = '.$idx->index;
-                    $query = "UPDATE `{$tableName}` SET `brand_id` = {$brandData[0]['brand_id']} WHERE {$condition}";
-                    $connection->query($query); 
-                }
-            }
-            Mage::getSingleton('adminhtml/session')->addSuccess('Brand is fine now');
-        } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-        }
-        $this->_redirect('*/*/index');
-    }
+    //         $newBrands = $idx->updateBrandTable(array_unique($idxBrandNames));
+    //         $idxCollection = $idx->getCollection();
+    //         foreach ($idxCollection as $idx) {
+    //             if(!$idx->brand_id)
+    //             {
+    //                 $brand = Mage::getModel('brand/brand');
+    //                 $brandCollection = Mage::getModel('brand/brand')->getCollection();
+    //                 $brandCollection->getSelect()->where('main_table.name=?',$idx->brand);
+    //                 $brandData = $brandCollection->getData();
+    //                 $resource = Mage::getSingleton('core/resource');
+    //                 $connection = $resource->getConnection('core_write');
+    //                 $tableName = $resource->getTableName('import_product_idx');
+    //                 $condition = '`index` = '.$idx->index;
+    //                 $query = "UPDATE `{$tableName}` SET `brand_id` = {$brandData[0]['brand_id']} WHERE {$condition}";
+    //                 $connection->query($query); 
+    //             }
+    //         }
+    //         Mage::getSingleton('adminhtml/session')->addSuccess('Brand is fine now');
+    //     } catch (Exception $e) {
+    //         Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+    //     }
+    //     $this->_redirect('*/*/index');
+    // }
     
 
-            }
+    //         }
 
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('idx')->__('Data Imported successfully.'));
-        } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-        }
-        $this->_redirect('*/adminhtml_idx/index'); 
-    }
+    //         Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('idx')->__('Data Imported successfully.'));
+    //     } catch (Exception $e) {
+    //         Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+    //     }
+    //     $this->_redirect('*/adminhtml_idx/index'); 
+    // }
 
 
     public function brandAction()
