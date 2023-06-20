@@ -39,7 +39,6 @@ class Ccc_Practice_Block_Adminhtml_Second_Grid extends Mage_Adminhtml_Block_Widg
         }
 
         $collection = new Varien_Data_Collection();
-
         foreach ($attributeOptionData as $data) {
             $row = new Varien_Object($data);
             $collection->addItem($row);

@@ -47,9 +47,19 @@
                 </seven>
                  <eight translate="title" module="practice">
                     <title>Task 8</title>
-                    <action>practice/Adminhtml_Query/eighth</action>
+                    <action>practice/Adminhtml_Query/eight</action>
                     <sort_order>0</sort_order>
                 </eight>
+                <nine translate="title" module="practice">
+                    <title>Task 9</title>
+                    <action>practice/Adminhtml_Query/nine</action>
+                    <sort_order>0</sort_order>
+                </nine>
+                <ten translate="title" module="practice">
+                    <title>Task 10</title>
+                    <action>practice/Adminhtml_Query/ten</action>
+                    <sort_order>0</sort_order>
+                </ten>
             </children>
          </practice>
     </menu>

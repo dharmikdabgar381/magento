@@ -4,7 +4,6 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
 {
     public function firstAction()
     {
-        // Need a list of product with these columns product name, sku, cost, price, color.
         $this->loadLayout();
         $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_First');
         $this->_addContent($block);
@@ -15,8 +14,9 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
 
-        $tableName = $resource->getTableName('catalog/product');
-        $select = $readConnection->select()
+        $tableName = $resource->getTableName('catalog/product');//catalog_product_entity
+        echo "<pre>";
+        echo $select = $readConnection->select()
             ->from(array('p' => $tableName), array(
                 'sku' => 'p.sku',
                 'name' => 'pv.value',
@@ -44,8 +44,6 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
                 'pi.entity_id = p.entity_id AND pi.attribute_id = 94',
                 array()
             );
-
-        echo $select;
     }
     public function secondAction()
     {
@@ -58,14 +56,13 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
     public function secondQueryAction()
     {
     	$attributeOptions = [];
-
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
 
         $attributeOptionTable = $resource->getTableName('eav_attribute_option');
         $attributeTable = $resource->getTableName('eav_attribute');
 
-        $select = $readConnection->select()
+        echo $select = $readConnection->select()
             ->from(
                 array('ao' => $attributeOptionTable),
                 array(
@@ -84,8 +81,6 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
                 'a.attribute_id = ao.attribute_id',
                 array('attribute_code' => 'a.attribute_code')
             );
-
-        echo $select;
 	}
 	public function thirdAction()
     {
@@ -242,6 +237,120 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
             )
             ->group('DD.entity_id');
     }
+    public function eightAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Eight');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function eightQueryAction()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+
+        $select = $readConnection->select()
+            ->from(array('oi' => $resource->getTableName('sales/order_item')), array())
+            ->columns(array(
+                'product_id' => 'oi.product_id',
+                'sku' => 'oi.sku',
+                'sold_quantity' => new Zend_Db_Expr('SUM(oi.qty_ordered)')
+            ))
+            ->group('oi.product_id');
+
+        echo $select;
+    }
+    public function nineAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Nine');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function nineQueryAction()
+    {
+        $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $tablePrefix = Mage::getConfig()->getTablePrefix();
+
+        echo "<pre>";
+        echo $select = $connection->select()
+        ->from(array('e' => 'catalog_product_entity'), 'entity_id AS product_id')
+        ->join(
+            array('a' => 'eav_attribute'),
+            'e.entity_type_id = a.entity_type_id',
+            array('attribute_id', 'attribute_code')
+        )
+        ->joinLeft(
+            array('avc' => 'catalog_product_entity_varchar'),
+            'e.entity_id = avc.entity_id AND avc.attribute_id = a.attribute_id',
+            array()
+        )
+        ->joinLeft(
+            array('avi' => 'catalog_product_entity_int'),
+            'e.entity_id = avi.entity_id AND avi.attribute_id = a.attribute_id',
+            array()
+        )
+        ->joinLeft(
+            array('avd' => 'catalog_product_entity_decimal'),
+            'e.entity_id = avd.entity_id AND avd.attribute_id = a.attribute_id',
+            array()
+        )
+        ->joinLeft(
+            array('avt' => 'catalog_product_entity_text'),
+            'e.entity_id = avt.entity_id AND avt.attribute_id = a.attribute_id',
+            array()
+        )
+        ->where('avc.value IS NULL AND avi.value IS NULL AND avd.value IS NULL AND avt.value IS NULL')
+        ->where('a.is_user_defined = ?', 1);
+    }
+
+    public function tenAction()
+    {
+        $this->loadLayout();
+        $block = $this->getLayout()->createBlock('Ccc_Practice_Block_Adminhtml_Ten');
+        $this->_addContent($block);
+        $this->renderLayout();
+    }
+    public function tenQueryAction()
+    {
+        $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $tablePrefix = Mage::getConfig()->getTablePrefix();
+
+        echo $select = $connection->select()
+        ->from(
+            array('e' => 'catalog_product_entity'),
+            array('entity_id AS product_id','sku')
+        )
+        ->join(
+            array('a' => 'eav_attribute'),
+            'e.entity_type_id = a.entity_type_id',
+            array('attribute_id', 'attribute_code')
+        )
+        ->joinLeft(
+            array('avc' => 'catalog_product_entity_varchar'),
+            'e.entity_id = avc.entity_id AND avc.attribute_id = a.attribute_id',
+            array()
+        )
+        ->joinLeft(
+            array('avi' => 'catalog_product_entity_int'),
+            'e.entity_id = avi.entity_id AND avi.attribute_id = a.attribute_id',
+            array('avi.value')
+        )
+        ->joinLeft(
+            array('avd' => 'catalog_product_entity_decimal'),
+            'e.entity_id = avd.entity_id AND avd.attribute_id = a.attribute_id',
+            array()
+        )
+        ->joinLeft(
+            array('avt' => 'catalog_product_entity_text'),
+            'e.entity_id = avt.entity_id AND avt.attribute_id = a.attribute_id',
+            array()
+        )
+        ->where('avc.value IS NOT NULL OR avi.value IS NOT NULL OR avd.value IS NOT NULL OR avt.value IS NOT NULL')
+        ->where('a.is_user_defined = ?', 1);
+    }
+
+
 
 
 }
