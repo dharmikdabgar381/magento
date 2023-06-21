@@ -8,38 +8,46 @@ class Ccc_Practice_Block_Adminhtml_Second_Grid extends Mage_Adminhtml_Block_Widg
         $this->setDefaultSort('attribute_id');
         $this->setDefaultDir('ASC');
     }
-
-   protected function _prepareCollection()
+    
+    protected function _prepareCollection()
     {
-        $attributeCollection = Mage::getModel('eav/entity_attribute')
-            ->getCollection();
-        $attributeOptionData = array();
+        $attributes = Mage::getModel('eav/entity_attribute')->getCollection();
+        $attributes->addFieldToFilter('is_user_defined', 1 );
+        $attributes->addFieldToFilter('frontend_input', array('select','multiselect') );
+        $readConnection = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $optionsTable = Mage::getSingleton('core/resource')->getTableName('eav_attribute_option');
+        $optionsValueTable = Mage::getSingleton('core/resource')->getTableName('eav_attribute_option_value');
 
-        foreach ($attributeCollection as $attribute) {
-
-            $attributeId = $attribute->getAttributeId();
-            $attributeCode = $attribute->getAttributeCode();
-
-            $optionCollection = Mage::getModel('eav/entity_attribute_option')
-                ->getCollection()
-                ->setAttributeFilter($attributeId)
-                ->setStoreFilter(0, false);
-
-            foreach ($optionCollection as $option) {
-                $optionId = $option->getOptionId();
-                $optionName = $option->getValue();
-
-                $attributeOptionData[] = array(
-                    'attribute_id' => $attributeId,
-                    'attribute_code' => $attributeCode,
-                    'option_id' => $optionId,
-                    'option_name' => $optionName
-                );
+        foreach ($attributes as $attribute) {
+            if ($attribute->getSourceModel()) {
+                $options = $attribute->getSource()->getAllOptions(false);
+                foreach ($options as $option) {
+                    $allOptions[] = array(
+                        'attribute_id'=>$attribute->getId(),
+                        'attribute_code'=>$attribute->getAttributeCode(),
+                        'option_id'=>$option['value'],
+                        'option_name'=>$option['label'],
+                    );
+                }
+            } else {
+                $query = $readConnection->select()
+                    ->from(array('o' => $optionsTable), array('option_id', 'sort_order'))
+                    ->joinLeft(array('ov' => $optionsValueTable), 'ov.option_id = o.option_id', array('value'))
+                    ->where('o.attribute_id = ?', $attribute->getId())
+                    ->order('o.sort_order ASC');
+                $options = $readConnection->fetchAll($query);
+                foreach ($options as $option) {
+                    $allOptions[] = array(
+                        'attribute_id'=>$attribute->getId(),
+                        'attribute_code'=>$attribute->getAttributeCode(),
+                        'option_id'=>$option['option_id'],
+                        'option_name'=>$option['value'],
+                    );
+                }
             }
         }
-
-        $collection = new Varien_Data_Collection();
-        foreach ($attributeOptionData as $data) {
+       $collection = new Varien_Data_Collection();
+        foreach ($allOptions as $data) {
             $row = new Varien_Object($data);
             $collection->addItem($row);
         }
