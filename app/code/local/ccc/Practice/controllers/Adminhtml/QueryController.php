@@ -27,22 +27,22 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
             ->joinLeft(
                 array('pv' => $resource->getTableName('catalog_product_entity_varchar')),
                 'pv.entity_id = p.entity_id AND pv.attribute_id = 73',
-                array()
+                
             )
             ->joinLeft(
                 array('pdc' => $resource->getTableName('catalog_product_entity_decimal')),
                 'pdc.entity_id = p.entity_id AND pdc.attribute_id = 81',
-                array()
+                
             )
             ->joinLeft(
                 array('pdp' => $resource->getTableName('catalog_product_entity_decimal')),
                 'pdp.entity_id = p.entity_id AND pdp.attribute_id = 77',
-                array()
+                
             )
             ->joinLeft(
                 array('pi' => $resource->getTableName('catalog_product_entity_int')),
                 'pi.entity_id = p.entity_id AND pi.attribute_id = 94',
-                array()
+                
             );
     }
     public function secondAction()
@@ -62,6 +62,7 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
         $attributeOptionTable = $resource->getTableName('eav_attribute_option');
         $attributeTable = $resource->getTableName('eav_attribute');
 
+        echo "<pre>";
         echo $select = $readConnection->select()
             ->from(
                 array('ao' => $attributeOptionTable),
@@ -96,8 +97,8 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
 
         $attributeOptionTable = $resource->getTableName('eav_attribute_option');
         $attributeTable = $resource->getTableName('eav_attribute');
-
-        $select = $readConnection->select()
+        echo "<pre>";
+        echo $select = $readConnection->select()
             ->from(
                 array('DD' => $attributeTable),
                 array(
@@ -115,7 +116,6 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
             ->group('DD.attribute_id')
             ->having('COUNT(option_count_table.option_id) > 10', 1);
 
-        echo $select;
     }
 
     public function fourthAction()
@@ -129,7 +129,7 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
     {
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
-
+        echo "<pre>";
         echo $select = $readConnection->select()
             ->from(
                 array('DD'=> $resource->getTableName('catalog_product_entity')),
@@ -164,6 +164,7 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
     {
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
+        echo "<pre>";
         echo $select = $readConnection->select()
             ->from(
                 array('DD'=> $resource->getTableName('catalog_product_entity')),
@@ -187,6 +188,7 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
     {
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
+        echo "<pre>";
         echo $select = $readConnection->select()
             ->from(
                 array('DD'=> $resource->getTableName('customer_entity')),
@@ -215,6 +217,7 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
     {
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
+        echo "<pre>";
         echo $select = $readConnection->select()
             ->from(
                 array('DD'=> $resource->getTableName('customer_entity')),
@@ -248,8 +251,8 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
     {
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
-
-        $select = $readConnection->select()
+        echo "<pre>";
+        echo $select = $readConnection->select()
             ->from(array('oi' => $resource->getTableName('sales/order_item')), array())
             ->columns(array(
                 'product_id' => 'oi.product_id',
@@ -258,7 +261,6 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
             ))
             ->group('oi.product_id');
 
-        echo $select;
     }
     public function nineAction()
     {
@@ -315,7 +317,7 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
     {
         $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
         $tablePrefix = Mage::getConfig()->getTablePrefix();
-
+        echo "<pre>";
         echo $select = $connection->select()
         ->from(
             array('e' => 'catalog_product_entity'),
