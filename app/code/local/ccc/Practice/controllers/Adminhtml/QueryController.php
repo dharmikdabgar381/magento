@@ -27,22 +27,25 @@ class Ccc_Practice_Adminhtml_QueryController extends Mage_Adminhtml_Controller_A
             ->joinLeft(
                 array('pv' => $resource->getTableName('catalog_product_entity_varchar')),
                 'pv.entity_id = p.entity_id AND pv.attribute_id = 73',
+                array()
                 
             )
             ->joinLeft(
                 array('pdc' => $resource->getTableName('catalog_product_entity_decimal')),
                 'pdc.entity_id = p.entity_id AND pdc.attribute_id = 81',
+                array()
                 
             )
             ->joinLeft(
                 array('pdp' => $resource->getTableName('catalog_product_entity_decimal')),
                 'pdp.entity_id = p.entity_id AND pdp.attribute_id = 77',
+                array()
                 
             )
             ->joinLeft(
                 array('pi' => $resource->getTableName('catalog_product_entity_int')),
                 'pi.entity_id = p.entity_id AND pi.attribute_id = 94',
-                
+                array()
             );
     }
     public function secondAction()

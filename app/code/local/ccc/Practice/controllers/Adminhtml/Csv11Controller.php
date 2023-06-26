@@ -1,0 +1,120 @@
+<?php
+/**
+ * 
+ */
+class Ccc_Practice_Adminhtml_Csv11Controller extends Mage_Adminhtml_Controller_Action
+{
+
+    protected $_data = array();
+    protected $_header = array();
+    
+    protected $_categoryData = array();
+    protected $_categoryHeader = array();
+    
+    protected $_dataFinal = array();
+    
+    protected $_categoryFile = 'C:/Users/admin/Desktop/1SB/CATEGORY.csv';
+    protected $_file = 'C:/Users/admin/Desktop/1SB/ATTRIBUTE-OPTIONS.csv';
+    protected $_fileReport = 'C:/Users/admin/Desktop/1SB/category-attribute-option.csv';
+
+    public function indexAction()
+    {   
+        $csv = new Varien_File_Csv();
+
+        $this->_prepareData();
+        $this->_formatData();
+        $csv->saveData($this->_fileReport, $this->_dataFinal);
+
+        echo "DONE";
+    }
+        
+    protected function _prepareData()
+    {
+        $csv = new Varien_File_Csv();
+
+        $data = $csv->getData($this->_file);
+        $categoryData = $csv->getData($this->_categoryFile);
+
+         if(!$data)
+        {
+            throw new Exception("Data is not available in file");
+        }
+        
+        if(!$categoryData)
+        {
+            throw new Exception("Category data is not available in file");
+        }
+
+        foreach ($categoryData as $row)
+        {
+            if(!$this->_categoryHeader)
+            {
+                $this->_categoryHeader = $row;
+            }
+            else
+            {
+                $row = array_combine($this->_categoryHeader, $row);
+                $this->_categoryData[] = $row;
+            }
+        }    
+
+        foreach ($data as $row) 
+        {
+            if(!$this->_header)
+            {
+                $this->_header = $row;
+            }
+            else
+            {
+                $row = array_combine($this->_header, $row);
+                $option = $row['OPTION'];
+                $this->_data[$option] = $row;
+            }
+        }  
+    }
+    
+    protected function _formatData()
+    {
+        if(!$this->_data)
+        {
+            throw new Exception("Data is not available");
+        }
+        
+        if(!$this->_categoryData)
+        {
+            throw new Exception("Category data is not available");
+        }
+        $this->_dataFinal[] = array('index','category','attribute' ,'option');
+        $categoryData = array_unique(array_column($this->_categoryData,'CATEGORY'));
+        $index = 1;
+        foreach($categoryData as $_category)
+        {
+            foreach($this->_data as $opt =>$data)
+            {
+                $output = array(
+                    'index' => $index,
+                    'category' => $_category,
+                    'attribute' => $data['ATTRIBUTE'],
+                    'option' => $data['OPTION'],
+                );
+                $this->_dataFinal[] = $output; 
+                $index ++;
+            }
+        }
+    }
+    
+    public function getData()
+    {
+        return $this->_data;
+    }
+
+    public function getCategoryData()
+    {
+        return $this->_categoryData;
+    }
+
+    public function getDataFinal()
+    {
+        return $this->_dataFinal;
+    }
+}

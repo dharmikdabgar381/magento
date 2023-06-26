@@ -10,25 +10,24 @@ class Ccc_Practice_Block_Adminhtml_Eight_Grid extends Mage_Adminhtml_Block_Widge
 
    protected function _prepareCollection()
     {
-        $collection = Mage::getModel('catalog/product')->getCollection();
+        $collection = Mage::getResourceModel('sales/order_item_collection')
+            ->addFieldToSelect(array('product_id', 'sku'));
+
         $collection->getSelect()
-            ->joinLeft(
-                array('oi' => Mage::getSingleton('core/resource')->getTableName('sales/order_item')),
-                'e.entity_id = oi.product_id',
-                array('sold_quantity' => 'SUM(oi.qty_ordered)')
-            )
-            ->group('e.entity_id');
+            ->columns(array('sold_quantity' => 'SUM(qty_ordered)'))
+            ->group(array('product_id', 'sku'));
 
         $this->setCollection($collection);
+
         return parent::_prepareCollection();
     }
 
     protected function _prepareColumns()
     {
-        $this->addColumn('entity_id', array( 
+        $this->addColumn('product_id', array( 
             'header'    => Mage::helper('practice')->__('Product Id'),
             'align'     => 'left',
-            'index'     => 'entity_id',
+            'index'     => 'product_id',
         ));
 
         $this->addColumn('sku', array( 

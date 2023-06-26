@@ -60,6 +60,34 @@
                     <action>practice/Adminhtml_Query/ten</action>
                     <sort_order>0</sort_order>
                 </ten>
+                <csvTask translate="title" module="practice">
+                    <title>CSV</title>
+                    <children>
+                        <csv translate="title" module="practice">
+                            <title>CSV</title>
+                            <action>practice/Adminhtml_Csv11/index</action>
+                            <sort_order>0</sort_order>
+                        </csv>
+                        <sort translate="title" module="practice">
+                            <title>SORT</title>
+                            <action>practice/Adminhtml_Sort/run</action>
+                            <sort_order>0</sort_order>
+                        </sort>
+                        <map translate="title" module="practice">
+                            <title>MAP</title>
+                            <action>practice/Adminhtml_Map/run</action>
+                            <sort_order>0</sort_order>
+                        </map>
+                        <sortOrder translate="title" module="practice">
+                            <title>SORT ORDER</title>
+                            <action>practice/Adminhtml_SortOrder/run</action>
+                            <sort_order>0</sort_order>
+                        </sortOrder>
+                    </children>
+                </csvTask>
+                
+                
+                
             </children>
          </practice>
     </menu>
